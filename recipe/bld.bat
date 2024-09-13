@@ -1,22 +1,19 @@
-rem I want to see my commands when they go wrong...
-echo on
-
-if not exist %SCRIPTS% mkdir %SCRIPTS% || exit 1
-
-rem inkscape.exe is the GUI, the .com is the commandline utility we need in other packages
-
-rem compile using the MS compilers
-cl -DGUI=0 -DDEBUG=0 "%RECIPE_DIR%\wrapper.c"
+if not exist "%LIBRARY_PREFIX%\bin" mkdir "%LIBRARY_PREFIX%\bin"
+XCOPY bin\* "%LIBRARY_PREFIX%\bin" /s /i /y
 if errorlevel 1 exit 1
 
-dumpbin /IMPORTS wrapper.exe
-
-copy "wrapper.exe" "%SCRIPTS%\inkscape.exe"
+if not exist "%LIBRARY_PREFIX%\etc" mkdir "%LIBRARY_PREFIX%\etc"
+XCOPY etc\* "%LIBRARY_PREFIX%\etc" /s /i /y
 if errorlevel 1 exit 1
 
-del wrapper.exe
-del wrapper.obj
+if not exist "%LIBRARY_PREFIX%\include" mkdir "%LIBRARY_PREFIX%\include"
+XCOPY include\* "%LIBRARY_PREFIX%\include" /s /i /y
+if errorlevel 1 exit 1
 
-rem last to see compile errors faster...
-7za x Inkscape-0.91-1.7z -o%LIBRARY_PREFIX%
+if not exist "%LIBRARY_PREFIX%\lib" mkdir "%LIBRARY_PREFIX%\lib"
+XCOPY lib\* "%LIBRARY_PREFIX%\lib" /s /i /y
+if errorlevel 1 exit 1
+
+if not exist "%LIBRARY_PREFIX%\share" mkdir "%LIBRARY_PREFIX%\share"
+XCOPY share\* "%LIBRARY_PREFIX%\share" /s /i /y
 if errorlevel 1 exit 1
